@@ -4,16 +4,133 @@
 
 UCII Core is the open-source foundation for cryptographic identity infrastructure.
 
-It provides foundational primitives for:
+It provides foundational primitives for developers building identity-aware systems, including:
 
-- identity models
-- identity lifecycle concepts
-- credential relationships
+- identity primitives
+- credential structures
 - cryptographic verification patterns
 - post-quantum cryptographic foundations
-- reference identity experiences
+- identity relationship concepts
 
-UCII Core is designed to provide an inspectable and extensible foundation for developers, researchers, organizations, and infrastructure builders.
+UCII Core is designed to be transparent, modular, inspectable, and extensible.
+
+---
+
+# Quick Start
+
+UCII Core can be installed from source and explored through the included examples.
+
+The project provides:
+
+- identity creation primitives
+- credential workflows
+- cryptographic verification patterns
+- post-quantum cryptographic foundations
+
+---
+
+# Installation
+
+## Requirements
+
+- Python 3.12+
+- Virtual environment recommended
+
+Install the package locally from the repository.
+
+
+## Install
+
+Clone the repository:
+
+git clone <repository-url>
+cd ucii-core
+
+Create a virtual environment:
+
+python -m venv .venv
+source .venv/bin/activate
+
+Install UCII Core:
+
+pip install -e .
+
+Run validation:
+
+pytest
+
+---
+
+# Examples
+
+UCII Core includes reference examples demonstrating the identity lifecycle.
+
+## Create Identity
+
+`examples/01_create_identity.py`
+
+Demonstrates:
+
+- identity creation
+- identity primitives
+- identity data structures
+
+## Create Credential
+
+`examples/02_create_credential.py`
+
+Demonstrates:
+
+- credential creation concepts
+- credential relationships
+- cryptographic credential patterns
+
+## Verify Credential
+
+`examples/03_verify_credential.py`
+
+Demonstrates:
+
+- credential verification
+- cryptographic validation workflows
+
+---
+
+# Repository Structure
+
+```text
+ucii-core/
+├── src/
+│   └── ucii/
+│       ├── identity/
+│       ├── credential/
+│       ├── pqc/
+│       └── sandbox/
+│
+├── examples/
+│   ├── 01_create_identity.py
+│   ├── 02_create_credential.py
+│   └── 03_verify_credential.py
+│
+├── tests/
+├── docs/
+├── pyproject.toml
+├── LICENSE
+└── SECURITY.md
+```
+
+---
+
+# Getting Started
+
+A typical UCII Core workflow:
+
+1. Create an identity primitive.
+2. Establish credential relationships.
+3. Apply cryptographic verification.
+4. Build applications and services around the identity layer.
+
+UCII Core provides the foundational identity layer. Application authentication, authorization, payments, hosted infrastructure, and operational systems are built separately.
 
 ---
 
@@ -86,8 +203,7 @@ These systems operate separately from the open-source identity foundation.
 
 UCII follows the principle:
 
-Open Core.
-Private Operations.
+**Open Core. Private Operations.**
 
 The identity primitive should be transparent and inspectable.
 
@@ -108,6 +224,22 @@ The repository is being developed with emphasis on:
 
 ---
 
+# Documentation
+
+Additional technical documentation is available in:
+
+docs/
+
+Including:
+
+- identity model documentation
+- cryptographic architecture
+- API references
+- security model documentation
+- open-source boundary documentation
+
+---
+
 # Security
 
 Security issues should be reported according to the process described in:
@@ -118,4 +250,7 @@ SECURITY.md
 
 # License
 
-See LICENSE.
+See:
+
+LICENSE
+
