@@ -1,11 +1,21 @@
 """
-Identity Foundation Module
+UCII Identity Foundation
 
-Root identity primitives for:
-- humans
-- AI agents
-- robots
-- devices
-- services
-- organizations
+Public identity primitives.
 """
+
+from .models import (
+    Identity,
+    IdentityType,
+    Credential,
+    CredentialType,
+    CredentialStatus,
+)
+
+__all__ = [
+    "Identity",
+    "IdentityType",
+    "Credential",
+    "CredentialType",
+    "CredentialStatus",
+]
