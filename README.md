@@ -190,7 +190,7 @@ The following remain outside UCII Core:
 
 - hosted identity services
 - production deployment infrastructure
-- operational analytics systems
+- operational intelligence systems
 - operational monitoring systems
 - private operational intelligence systems
 - commercial management layers

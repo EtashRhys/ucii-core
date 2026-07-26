@@ -99,7 +99,7 @@ UCII Core does not include:
 
 - hosted infrastructure
 - production service deployment
-- operational analytics systems
+- operational intelligence systems
 - commercial management systems
 - private operational tooling
 
