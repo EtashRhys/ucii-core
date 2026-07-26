@@ -1,43 +1,25 @@
 """
-Identity Database Models
+UCII Core Identity Models
 
-Identity is the root primitive of the system.
+Identity is the root primitive.
 
 Authentication, authorization,
-credentials, and x402 metering
-attach to identity layers.
+credentials, and payments attach
+to identity relationships.
 
-Phase 2.5.5.2:
-- Credentials support cryptographic lineage
-- Historical credential ancestry is preserved
-- Rotation continuity foundation added
-- Credential replacement lifecycle added
+This module contains pure identity
+concepts and does not depend on
+databases or application runtimes.
 """
 
+from dataclasses import dataclass, field
 from datetime import datetime
+from enum import Enum
+from typing import Optional
 import uuid
-import enum
-
-from sqlalchemy import (
-    Column,
-    String,
-    Boolean,
-    DateTime,
-    Text,
-    Enum,
-    JSON,
-    ForeignKey,
-)
-
-from sqlalchemy.orm import relationship
-
-from ..database import Base
 
 
-print("Loading identity.models")
-
-
-class IdentityType(str, enum.Enum):
+class IdentityType(str, Enum):
     """
     Supported identity classes.
     """
@@ -50,7 +32,7 @@ class IdentityType(str, enum.Enum):
     ORGANIZATION = "ORGANIZATION"
 
 
-class CredentialType(str, enum.Enum):
+class CredentialType(str, Enum):
     """
     Cryptographic credential classes.
 
@@ -65,20 +47,9 @@ class CredentialType(str, enum.Enum):
     ATTESTATION_KEY = "ATTESTATION_KEY"
 
 
-class CredentialStatus(str, enum.Enum):
+class CredentialStatus(str, Enum):
     """
     Credential lifecycle states.
-
-    REPLACED means the credential was valid
-    but superseded by a newer credential.
-
-    It is different from REVOKED.
-
-    REVOKED:
-        Credential should no longer be trusted.
-
-    REPLACED:
-        Credential was intentionally migrated.
     """
 
     ACTIVE = "ACTIVE"
@@ -88,305 +59,63 @@ class CredentialStatus(str, enum.Enum):
     EXPIRED = "EXPIRED"
 
 
-
-class Identity(Base):
+@dataclass
+class Identity:
     """
     Root identity object.
 
     Identity represents the actor.
 
-    Authentication and credentials
+    Credentials and capabilities
     attach to identity.
     """
 
-    __tablename__ = "identities"
+    name: str
+    identity_type: IdentityType
+    description: Optional[str] = None
 
+    id: str = field(
+        default_factory=lambda: str(uuid.uuid4())
+    )
 
-    id = Column(
-        String,
-        primary_key=True,
-        default=lambda: str(uuid.uuid4())
+    is_active: bool = True
+
+    created_at: datetime = field(
+        default_factory=datetime.utcnow
     )
 
 
-    identity_type = Column(
-        Enum(IdentityType),
-        nullable=False,
-        index=True
-    )
-
-
-    name = Column(
-        String,
-        nullable=False,
-        index=True
-    )
-
-
-    description = Column(
-        Text,
-        nullable=True
-    )
-
-
-    is_active = Column(
-        Boolean,
-        default=True
-    )
-
-
-    created_at = Column(
-        DateTime,
-        default=datetime.utcnow
-    )
-
-
-    updated_at = Column(
-        DateTime,
-        default=datetime.utcnow,
-        onupdate=datetime.utcnow
-    )
-
-
-    profiles = relationship(
-        "IdentityProfile",
-        back_populates="identity",
-        cascade="all, delete-orphan"
-    )
-
-
-    credentials = relationship(
-        "Credential",
-        back_populates="identity",
-        cascade="all, delete-orphan"
-    )
-
-
-    def __repr__(self):
-        return (
-            f"<Identity "
-            f"{self.identity_type}: "
-            f"{self.name}>"
-        )
-
-
-
-class IdentityProfile(Base):
-    """
-    Identity-specific metadata extension.
-
-    Profile data changes depending
-    on identity type.
-    """
-
-    __tablename__ = "identity_profiles"
-
-
-    id = Column(
-        String,
-        primary_key=True,
-        default=lambda: str(uuid.uuid4())
-    )
-
-
-    identity_id = Column(
-        String,
-        ForeignKey("identities.id"),
-        nullable=False,
-        index=True
-    )
-
-
-    profile_type = Column(
-        Enum(IdentityType),
-        nullable=False,
-        index=True
-    )
-
-
-    profile_data = Column(
-        JSON,
-        nullable=True
-    )
-
-
-    created_at = Column(
-        DateTime,
-        default=datetime.utcnow
-    )
-
-
-    updated_at = Column(
-        DateTime,
-        default=datetime.utcnow,
-        onupdate=datetime.utcnow
-    )
-
-
-    identity = relationship(
-        "Identity",
-        back_populates="profiles"
-    )
-
-
-
-class Credential(Base):
+@dataclass
+class Credential:
     """
     Cryptographic credential.
 
-    A credential proves control over
+    Credentials prove control over
     cryptographic material.
 
-    Private keys are NEVER stored here.
-
-    Credentials are historical objects.
-
-    They are never deleted.
-
-    Rotation creates a new credential
-    while preserving ancestry.
+    Private keys are never stored.
     """
 
-    __tablename__ = "credentials"
+    identity_id: str
+    credential_type: CredentialType
+    algorithm: str
+    public_key: str
+    fingerprint: str
 
-
-    id = Column(
-        String,
-        primary_key=True,
-        default=lambda: str(uuid.uuid4())
+    id: str = field(
+        default_factory=lambda: str(uuid.uuid4())
     )
 
-
-    identity_id = Column(
-        String,
-        ForeignKey("identities.id"),
-        nullable=False,
-        index=True
+    status: CredentialStatus = (
+        CredentialStatus.ACTIVE
     )
 
+    key_version: str = "1"
 
-    credential_type = Column(
-        Enum(CredentialType),
-        nullable=False,
-        index=True
+    created_at: datetime = field(
+        default_factory=datetime.utcnow
     )
 
+    expires_at: Optional[datetime] = None
 
-    algorithm = Column(
-        String,
-        nullable=False
-    )
-
-
-    public_key = Column(
-        Text,
-        nullable=False
-    )
-
-
-    fingerprint = Column(
-        String,
-        nullable=False,
-        unique=True,
-        index=True
-    )
-
-
-    key_version = Column(
-        String,
-        default="1",
-        nullable=False
-    )
-
-
-    status = Column(
-        Enum(CredentialStatus),
-        default=CredentialStatus.ACTIVE,
-        nullable=False,
-        index=True
-    )
-
-
-    created_at = Column(
-        DateTime,
-        default=datetime.utcnow
-    )
-
-
-    expires_at = Column(
-        DateTime,
-        nullable=True
-    )
-
-
-    revoked_at = Column(
-        DateTime,
-        nullable=True
-    )
-
-
-    revocation_reason = Column(
-        String,
-        nullable=True
-    )
-
-
-    # ========================================================
-    # Credential lineage
-    #
-    # New credentials point backward
-    # to the credential they replaced.
-    #
-    # Example:
-    #
-    # Credential v3
-    #       |
-    #       v
-    # Credential v2
-    #       |
-    #       v
-    # Credential v1
-    #
-    # ========================================================
-
-
-    previous_credential_id = Column(
-        String,
-        ForeignKey("credentials.id"),
-        nullable=True,
-        index=True
-    )
-
-
-    rotation_reason = Column(
-        String,
-        nullable=True
-    )
-
-
-    rotated_at = Column(
-        DateTime,
-        nullable=True
-    )
-
-
-    previous_credential = relationship(
-        "Credential",
-        remote_side="Credential.id",
-        foreign_keys=[previous_credential_id],
-        uselist=False
-    )
-
-
-    identity = relationship(
-        "Identity",
-        back_populates="credentials"
-    )
-
-
-    def __repr__(self):
-        return (
-            f"<Credential "
-            f"{self.credential_type} "
-            f"{self.status}>"
-        )
+    previous_credential_id: Optional[str] = None

@@ -14,7 +14,11 @@ authors = [
     {name = "UCII"}
 ]
 
-dependencies = []
+dependencies = [
+    "cryptography>=42.0.0",
+    "liboqs-python>=0.16.0",
+    "pydantic>=2.0.0"
+]
 
 [tool.setuptools.packages.find]
 where = ["src"]

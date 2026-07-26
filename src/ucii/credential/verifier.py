@@ -1,23 +1,17 @@
 """
-Credential Verification Engine
+UCII Core Credential Verification
 
-Coordinates credential verification.
+Provides credential verification concepts.
 
-This layer handles:
+This module contains verification
+logic only.
 
-- credential lookup
-- lifecycle checks
-- algorithm routing
-- cryptographic verification
-
-Cryptographic implementations remain
-inside ucii.pqc.
+Storage, databases, APIs, and
+runtime services remain outside
+UCII Core.
 """
 
-
 from datetime import datetime
-
-from sqlalchemy.orm import Session
 
 from ..identity.models import (
     Credential,
@@ -26,16 +20,16 @@ from ..identity.models import (
 
 from .algorithms import SignatureVerifier
 
-from .schemas import (
-    VerificationRequest,
-    VerificationResponse,
-)
-
-
 
 class CredentialVerifier:
     """
-    Credential verification orchestrator.
+    Credential verification engine.
+
+    Accepts credential objects directly.
+
+    Persistence and lookup are the
+    responsibility of applications
+    built on top of UCII Core.
     """
 
 
@@ -43,79 +37,42 @@ class CredentialVerifier:
         self,
         algorithm_provider: SignatureVerifier,
     ):
-
         self.algorithm_provider = algorithm_provider
-
 
 
     def verify(
         self,
-        db: Session,
-        request: VerificationRequest,
-    ) -> VerificationResponse:
+        credential: Credential,
+        message: bytes,
+        signature: bytes,
+    ) -> bool:
+        """
+        Verify control of a credential.
 
+        Returns:
 
-        credential = (
-            db.query(Credential)
-            .filter(
-                Credential.fingerprint == request.fingerprint
-            )
-            .first()
-        )
+        True:
+            signature is valid
 
-
-        if credential is None:
-
-            return VerificationResponse(
-                verified=False,
-                fingerprint=request.fingerprint,
-                reason="Credential not found",
-            )
+        False:
+            verification failed
+        """
 
 
         if credential.status != CredentialStatus.ACTIVE:
-
-            return VerificationResponse(
-                verified=False,
-                fingerprint=request.fingerprint,
-                identity_id=credential.identity_id,
-                status=credential.status,
-                reason="Credential is not active",
-            )
+            return False
 
 
         if (
             credential.expires_at
             and credential.expires_at < datetime.utcnow()
         ):
-
-            return VerificationResponse(
-                verified=False,
-                fingerprint=request.fingerprint,
-                identity_id=credential.identity_id,
-                status=CredentialStatus.EXPIRED,
-                reason="Credential expired",
-            )
+            return False
 
 
-
-        verified = self.algorithm_provider.verify(
+        return self.algorithm_provider.verify(
             credential.algorithm,
             credential.public_key,
-            request.message,
-            request.signature,
-        )
-
-
-
-        return VerificationResponse(
-            verified=verified,
-            fingerprint=request.fingerprint,
-            identity_id=credential.identity_id,
-            status=credential.status,
-            reason=(
-                None
-                if verified
-                else "Signature verification failed"
-            ),
+            message,
+            signature,
         )
