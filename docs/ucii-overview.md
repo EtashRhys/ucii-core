@@ -21,7 +21,7 @@ UCII provides:
 - Credential lifecycle management
 - Identity verification
 - Machine identity support
-- x402 economic authorization
+- integration patterns for economic authorization systems
 
 ---
 
@@ -40,7 +40,7 @@ UCII supports:
 
 ## Economic Authorization
 
-Protected infrastructure operations use x402.
+UCII deployments may use x402 for protected infrastructure operations.
 
 The flow:
 

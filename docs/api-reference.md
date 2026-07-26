@@ -2,7 +2,7 @@
 
 Universal Cryptographic Identity Infrastructure API.
 
-UCII provides cryptographic identity primitives secured by post-quantum cryptography and protected through x402 economic authorization.
+UCII provides cryptographic identity primitives secured by post-quantum cryptography. Deployments may integrate x402 economic authorization for controlled infrastructure access.
 
 ---
 
