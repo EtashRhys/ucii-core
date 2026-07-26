@@ -191,8 +191,8 @@ The following remain outside UCII Core:
 - hosted identity services
 - production deployment infrastructure
 - operational analytics systems
-- Mission Control
-- private business intelligence systems
+- operational monitoring systems
+- private operational intelligence systems
 - commercial management layers
 
 These systems operate separately from the open-source identity foundation.
