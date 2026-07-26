@@ -1,39 +1,98 @@
 # Security Policy
 
-## Supported Versions
+## Scope
 
-This project is actively maintained and deployed as a private infrastructure service.  
-Only the latest commit on the `main` branch is considered supported.
+UCII Core is the open-source foundation for Universal Cryptographic Identity Infrastructure.
 
-## Reporting a Vulnerability
+This repository contains public identity primitives, credential structures, cryptographic verification patterns, and post-quantum cryptographic foundations.
 
-**Please do not report security vulnerabilities publicly** (via issues or pull requests).
-
-Instead, please report them privately to me using one of these methods:
-
-- **GitHub Security Advisory** (recommended):  
-  Go to the [Security tab](https://github.com/EtashRhys/UCII/security/advisories) → "Report a vulnerability"
-
-- **Email**: (add your email here if you want)
-
-## What to Include in the Report
-
-- Description of the vulnerability
-- Steps to reproduce
-- Potential impact (especially if related to PQC hybrid logic, key management, etc.)
-- Any suggested fixes (if you have one)
-
-## Response Timeline
-
-I will acknowledge receipt of your report within 48 hours (when possible).  
-I aim to provide a full response or fix plan within 7–14 days, depending on complexity.
-
-## Disclosure Policy
-
-- We follow responsible disclosure.
-- We will credit you for the discovery (unless you prefer to stay anonymous).
-- This project contains private infrastructure components. Security reports should be handled through responsible disclosure.
+Private operational infrastructure, hosted services, production deployments, and business systems are maintained separately.
 
 ---
 
-**Thank you for helping keep this project secure.**
+## Supported Versions
+
+The latest commit on the `main` branch represents the current supported development version.
+
+Security fixes will be prioritized for actively maintained versions of UCII Core.
+
+---
+
+## Reporting a Vulnerability
+
+Please do not publicly disclose security vulnerabilities through:
+
+- GitHub issues
+- pull requests
+- public discussions
+
+Security vulnerabilities should be reported privately through responsible disclosure.
+
+The preferred reporting method is a GitHub Security Advisory:
+
+https://github.com/EtashRhys/UCII/security/advisories
+
+---
+
+## What to Include in a Report
+
+Please include:
+
+- Description of the vulnerability
+- Steps to reproduce
+- Affected components
+- Potential impact
+- Suggested mitigation or remediation if available
+
+For cryptographic issues, include relevant details involving:
+
+- key handling
+- signature verification
+- credential validation
+- post-quantum cryptographic components
+- cryptographic implementation behavior
+
+---
+
+## Response Process
+
+Security reports will be reviewed as soon as possible.
+
+The response process may include:
+
+1. Confirmation of receipt
+2. Investigation and validation
+3. Development of a remediation plan
+4. Security fix implementation
+5. Appropriate disclosure after mitigation
+
+---
+
+## Responsible Disclosure
+
+UCII Core follows responsible disclosure practices.
+
+Researchers who responsibly report valid vulnerabilities may receive recognition for their contribution.
+
+---
+
+## Security Boundary
+
+UCII Core provides open cryptographic identity foundations.
+
+The following remain outside this repository:
+
+- hosted identity services
+- production infrastructure
+- operational monitoring systems
+- private deployment systems
+- commercial management layers
+
+Security reporting for those systems follows their respective processes.
+
+---
+
+## Thank You
+
+Thank you for helping improve the security and reliability of UCII Core.
+
