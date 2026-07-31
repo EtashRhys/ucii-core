@@ -2,68 +2,174 @@
 
 ## Universal Cryptographic Identity Infrastructure Core
 
-UCII Core is the open-source foundation for cryptographic identity infrastructure.
+UCII Core is an open-source cryptographic identity foundation for developers building identity-aware systems.
 
-It provides foundational primitives for developers building identity-aware systems, including:
+> Identity is the primitive. Authentication is an application.
+
+UCII Core provides foundational identity infrastructure including:
 
 - identity primitives
 - credential structures
-- cryptographic verification patterns
+- cryptographic verification concepts
 - post-quantum cryptographic foundations
-- identity relationship concepts
+- identity relationship models
 
-UCII Core is designed to be transparent, modular, inspectable, and extensible.
+The project is designed to be transparent, inspectable, modular, and extensible.
+
+
+---
+
+# Why UCII Core?
+
+Modern systems often treat authentication as the foundation of trust.
+
+Passwords, OAuth providers, certificates, and authentication methods change over time.
+
+Identity should not.
+
+UCII Core separates permanent cryptographic identity from authentication methods, credentials, and authorization systems.
+
+Applications can build trust relationships around identity rather than replacing identity whenever authentication mechanisms evolve.
+
+
+---
+
+# Core Concepts
+
+## Identity
+
+A cryptographic identity represents the foundational entity within a UCII system.
+
+UCII supports identity concepts for:
+
+- Humans
+- AI agents
+- Devices
+- Robots
+- Services
+- Organizations
+
+---
+
+## Credentials
+
+Credentials represent cryptographic relationships and assertions associated with identities.
+
+UCII Core provides credential structures and verification patterns for building identity-aware applications.
+
+
+---
+
+## Verification
+
+Verification establishes cryptographic trust relationships between identities and credentials.
+
+UCII Core provides foundational primitives for validating these relationships.
+
+
+---
+
+# Architecture
+
+UCII Core is organized around three primary layers:
+
+```text
+                Applications
+
+                     |
+
+                     v
+
+          Identity-Aware Systems
+
+                     |
+
+                     v
+
+             Credential Layer
+
+                     |
+
+                     v
+
+             Identity Layer
+
+                     |
+
+                     v
+
+       Post-Quantum Cryptographic Foundation
+```
+
+The identity layer is the foundation.
+
+Credentials, verification, authentication, authorization, and application-specific trust systems build on top of identity.
+
+
+---
+
+# Current Capabilities
+
+UCII Core currently provides:
+
+- Cryptographic identity primitives
+- Multiple identity class concepts
+- Credential structures
+- Credential verification patterns
+- Post-quantum cryptographic foundations
+- Hybrid cryptographic implementations
+- Identity relationship models
+- Reference examples
+- Security documentation
 
 ---
 
 # Quick Start
 
-UCII Core can be installed from source and explored through the included examples.
-
-The project provides:
-
-- identity creation primitives
-- credential workflows
-- cryptographic verification patterns
-- post-quantum cryptographic foundations
-
----
-
-# Installation
-
 ## Requirements
 
-- Python 3.12+
-- Virtual environment recommended
-
-Install the package locally from the repository.
-
-
-## Install
+* Python 3.12+
+* Virtual environment recommended
+## Installation
 
 Clone the repository:
 
+```bash
 git clone <repository-url>
+
 cd ucii-core
+
+```
 
 Create a virtual environment:
 
+```bash
 python -m venv .venv
+
 source .venv/bin/activate
+
+```
 
 Install UCII Core:
 
+```bash
 pip install -e .
+
+```
 
 Run validation:
 
+```bash
 pytest
+
+```
+
 
 ---
 
 # Examples
 
-UCII Core includes reference examples demonstrating the identity lifecycle.
+UCII Core includes reference examples demonstrating identity workflows.
 
 ## Create Identity
 
@@ -71,9 +177,11 @@ UCII Core includes reference examples demonstrating the identity lifecycle.
 
 Demonstrates:
 
-- identity creation
-- identity primitives
-- identity data structures
+* identity creation
+* identity primitives
+* identity data structures
+
+---
 
 ## Create Credential
 
@@ -81,9 +189,11 @@ Demonstrates:
 
 Demonstrates:
 
-- credential creation concepts
-- credential relationships
-- cryptographic credential patterns
+* credential structures
+* credential relationships
+* cryptographic credential concepts
+
+---
 
 ## Verify Credential
 
@@ -91,160 +201,88 @@ Demonstrates:
 
 Demonstrates:
 
-- credential verification
-- cryptographic validation workflows
-
----
-
-# Repository Structure
-
-```text
-ucii-core/
-├── src/
-│   └── ucii/
-│       ├── identity/
-│       ├── credential/
-│       ├── pqc/
-│       └── sandbox/
-│
-├── examples/
-│   ├── 01_create_identity.py
-│   ├── 02_create_credential.py
-│   └── 03_verify_credential.py
-│
-├── tests/
-├── docs/
-├── pyproject.toml
-├── LICENSE
-└── SECURITY.md
-```
-
----
-
-# Getting Started
-
-A typical UCII Core workflow:
-
-1. Create an identity primitive.
-2. Establish credential relationships.
-3. Apply cryptographic verification.
-4. Build applications and services around the identity layer.
-
-UCII Core provides the foundational identity layer. Application authentication, authorization, payments, hosted infrastructure, and operational systems are built separately.
-
----
-
-# Project Philosophy
-
-Identity is the root primitive.
-
-Authentication, authorization, payments, and hosted services are applications built around identity.
-
-UCII Core focuses on the foundational identity layer.
-
----
-
-# Included
-
-The public UCII Core repository contains:
-
-## Identity Layer
-
-Provides:
-
-- identity primitives
-- lifecycle models
-- identity relationships
-- identity data structures
-
-## Credential Layer
-
-Provides:
-
-- credential structures
-- ownership verification concepts
-- credential relationships
-- cryptographic verification patterns
-
-## Post-Quantum Cryptography
-
-Provides:
-
-- hybrid cryptographic foundations
-- post-quantum algorithm integrations
-- cryptographic primitives
-
-## Reference Sandbox
-
-Provides:
-
-- identity relationship demonstrations
-- capability concepts
-- proof relationship examples
-
----
-
-# Not Included
-
-The following remain outside UCII Core:
-
-- hosted identity services
-- production deployment infrastructure
-- operational intelligence systems
-- operational monitoring systems
-- private operational intelligence systems
-- commercial management layers
-
-These systems operate separately from the open-source identity foundation.
-
----
-
-# Architecture Principle
-
-UCII follows the principle:
-
-**Open Core. Private Operations.**
-
-The identity primitive should be transparent and inspectable.
-
-Operational infrastructure, hosted services, and intelligence systems may remain proprietary.
-
----
-
-# Status
-
-UCII Core is an early-stage infrastructure project.
-
-The repository is being developed with emphasis on:
-
-- cryptographic transparency
-- modular architecture
-- developer adoption
-- interoperability
+* credential verification
+* cryptographic validation workflows
 
 ---
 
 # Documentation
 
-Additional technical documentation is available in:
+Detailed documentation is available in:
 
+```text
 docs/
+
+```
 
 Including:
 
-- identity model documentation
-- cryptographic architecture
-- API references
-- security model documentation
-- open-source boundary documentation
+* Identity Model
+* Cryptographic Architecture
+* Security Model
+* API Reference
+* x402 Integration
+* Open Source Boundary
+* Roadmap
+
+---
+
+# Open Source Boundary
+
+UCII Core follows the principle:
+
+> Open Core. Private Operations.
+
+The public repository focuses on transparent and inspectable identity foundations.
+
+Included:
+
+* Identity primitives
+* Credential structures
+* Cryptographic foundations
+* Verification concepts
+* Developer resources
+Outside UCII Core:
+
+* Hosted identity services
+* Production deployment infrastructure
+* Operational systems
+* Commercial service layers
+* Private infrastructure tooling
 
 ---
 
 # Security
 
-Security issues should be reported according to the process described in:
+UCII Core is designed around cryptographic trust principles.
 
+Security documentation is available in:
+
+```text
 SECURITY.md
+
+docs/security-model.md
+
+```
+
+
+---
+
+# Roadmap
+
+Future development includes:
+
+* Additional language SDKs
+* Expanded integrations
+* Additional ecosystem tooling
+* Hosted platform capabilities
+See:
+
+```text
+docs/roadmap.md
+
+```
+
 
 ---
 
@@ -252,5 +290,7 @@ SECURITY.md
 
 See:
 
+```text
 LICENSE
 
+```
